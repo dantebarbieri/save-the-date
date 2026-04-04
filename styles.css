@@ -140,6 +140,12 @@ html, body {
   margin-bottom: 0.2em;
 }
 
+.details-link {
+  color: inherit;
+  text-decoration: none;
+  cursor: pointer;
+}
+
 /* --- Accessibility --- */
 
 .sr-only {
