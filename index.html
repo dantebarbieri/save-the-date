@@ -18,6 +18,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300&family=Great+Vibes&family=Libre+Baskerville&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="styles.css">
+  <noscript>
+    <style>.bg-img--loading { opacity: 1; } .bg-placeholder { display: none; }</style>
+  </noscript>
 </head>
 <body>
   <!-- Fast-load medium-res (loads quickly, replaced by full-res) -->
@@ -81,8 +84,7 @@
       role="presentation"
       class="bg-img bg-img--loading"
       id="bg-full"
-      fetchpriority="high"
-      decoding="async">
+      fetchpriority="high">
   </picture>
 
   <main class="content" aria-label="Save the Date">
@@ -110,16 +112,26 @@
     if (window.innerWidth <= 768) {
       ph.src = 'assets/img/vertical-1024.webp';
     }
-    // Fade in full-res image when loaded
+    // Swap placeholder for full-res once decoded and ready to paint
     var full = document.getElementById('bg-full');
     function onFullLoad() {
       full.classList.remove('bg-img--loading');
       ph.style.display = 'none';
     }
-    if (full.complete) {
-      onFullLoad();
+    if (typeof full.decode === 'function') {
+      full.decode().then(onFullLoad).catch(function() {
+        if (full.complete && full.naturalWidth > 0) {
+          onFullLoad();
+        } else {
+          full.addEventListener('load', onFullLoad);
+        }
+      });
     } else {
-      full.addEventListener('load', onFullLoad);
+      if (full.complete && full.naturalWidth > 0) {
+        onFullLoad();
+      } else {
+        full.addEventListener('load', onFullLoad);
+      }
     }
   </script>
 </body>
