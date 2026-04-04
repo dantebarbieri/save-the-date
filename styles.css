@@ -51,14 +51,14 @@ html, body {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center center;
+  object-position: center bottom;
 }
 
 .bg-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center center;
+  object-position: center bottom;
   transition: none;
 }
 
@@ -178,7 +178,9 @@ html, body {
 @media (max-width: 768px) {
   .bg-img,
   .bg-placeholder {
-    object-position: center 35%;
+    object-position: 32% 40%;
+    transform: scale(1.25);
+    transform-origin: 32% 40%;
   }
 
   .save-the-date-text {
@@ -193,9 +195,9 @@ html, body {
 /* Small phones */
 @media (max-width: 480px) {
   :root {
-    --save-date-size: clamp(2.5rem, min(7vh, 12vw), 4.5rem);
-    --the-size: clamp(1.2rem, min(3vh, 4vw), 2rem);
-    --details-size: clamp(0.6rem, 2.8vw, 0.85rem);
+    --save-date-size: clamp(4rem, min(11vh, 18vw), 7rem);
+    --the-size: clamp(1.8rem, min(4.5vh, 6vw), 3.2rem);
+    --details-size: clamp(0.75rem, 3.2vw, 0.95rem);
   }
 
   .details {
