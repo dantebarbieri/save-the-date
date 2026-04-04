@@ -10,28 +10,13 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-  <!-- Preload the fast-load image for instant display -->
-  <link rel="preload" as="image" type="image/webp" href="assets/img/wide-1024.webp" media="(min-width: 769px)">
-  <link rel="preload" as="image" type="image/webp" href="assets/img/vertical-1024.webp" media="(max-width: 768px)">
-
   <!-- Google Fonts: single combined request -->
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300&family=Great+Vibes&family=Libre+Baskerville&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="styles.css">
-  <noscript>
-    <style>.bg-img--loading { opacity: 1; } .bg-placeholder { display: none; }</style>
-  </noscript>
 </head>
 <body>
-  <!-- Fast-load medium-res (loads quickly, replaced by full-res) -->
-  <img
-    src="assets/img/wide-1024.webp"
-    alt=""
-    role="presentation"
-    class="bg-placeholder"
-    id="bg-placeholder">
-
-  <!-- Full-res background image with art direction + resolution switching -->
+  <!-- Background image with art direction + resolution switching -->
   <picture class="bg-picture">
     <!-- Vertical (portrait) sources for narrow viewports -->
     <source
@@ -82,8 +67,7 @@
       src="assets/img/wide-1920.jpg"
       alt=""
       role="presentation"
-      class="bg-img bg-img--loading"
-      id="bg-full"
+      class="bg-img"
       fetchpriority="high">
   </picture>
 
@@ -106,33 +90,5 @@
       <p class="details-location">Aptos, California</p>
     </div>
   </main>
-  <script>
-    // Swap placeholder for vertical on narrow screens
-    var ph = document.getElementById('bg-placeholder');
-    if (window.innerWidth <= 768) {
-      ph.src = 'assets/img/vertical-1024.webp';
-    }
-    // Swap placeholder for full-res once decoded and ready to paint
-    var full = document.getElementById('bg-full');
-    function onFullLoad() {
-      full.classList.remove('bg-img--loading');
-      ph.style.display = 'none';
-    }
-    if (typeof full.decode === 'function') {
-      full.decode().then(onFullLoad).catch(function() {
-        if (full.complete && full.naturalWidth > 0) {
-          onFullLoad();
-        } else {
-          full.addEventListener('load', onFullLoad);
-        }
-      });
-    } else {
-      if (full.complete && full.naturalWidth > 0) {
-        onFullLoad();
-      } else {
-        full.addEventListener('load', onFullLoad);
-      }
-    }
-  </script>
 </body>
 </html>
