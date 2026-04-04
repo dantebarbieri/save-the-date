@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Save the Date — Dante &amp; Anjali</title>
+  <meta name="description" content="Save the Date for Dante and Anjali's wedding — February 27, 2027 at Sparrow Valley Retreat in Aptos, California">
+
+  <!-- Preconnect to Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <!-- LCP image preload hints -->
+  <link rel="preload" as="image" type="image/avif" href="assets/img/wide-1920.avif" media="(min-width: 769px)">
+  <link rel="preload" as="image" type="image/avif" href="assets/img/vertical-1024.avif" media="(max-width: 768px)">
+
+  <!-- Google Fonts: single combined request -->
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300&family=Great+Vibes&family=Libre+Baskerville&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Background image with art direction + resolution switching -->
+  <picture class="bg-picture">
+    <!-- Vertical (portrait) sources for narrow viewports -->
+    <source
+      media="(max-width: 768px)"
+      type="image/avif"
+      srcset="
+        assets/img/vertical-640.avif   640w,
+        assets/img/vertical-1024.avif 1024w,
+        assets/img/vertical-1440.avif 1440w,
+        assets/img/vertical-1920.avif 1920w"
+      sizes="100vw">
+    <source
+      media="(max-width: 768px)"
+      type="image/webp"
+      srcset="
+        assets/img/vertical-640.webp   640w,
+        assets/img/vertical-1024.webp 1024w,
+        assets/img/vertical-1440.webp 1440w,
+        assets/img/vertical-1920.webp 1920w"
+      sizes="100vw">
+    <source
+      media="(max-width: 768px)"
+      srcset="assets/img/vertical-1920.jpg"
+      sizes="100vw">
+
+    <!-- Wide (landscape) sources for wider viewports -->
+    <source
+      type="image/avif"
+      srcset="
+        assets/img/wide-1024.avif 1024w,
+        assets/img/wide-1440.avif 1440w,
+        assets/img/wide-1920.avif 1920w,
+        assets/img/wide-2560.avif 2560w"
+      sizes="100vw">
+    <source
+      type="image/webp"
+      srcset="
+        assets/img/wide-1024.webp 1024w,
+        assets/img/wide-1440.webp 1440w,
+        assets/img/wide-1920.webp 1920w,
+        assets/img/wide-2560.webp 2560w"
+      sizes="100vw">
+
+    <!-- Ultimate JPG fallback -->
+    <img
+      src="assets/img/wide-1920.jpg"
+      alt=""
+      role="presentation"
+      class="bg-img"
+      fetchpriority="high"
+      decoding="async">
+  </picture>
+
+  <main class="content" aria-label="Save the Date">
+    <!-- Decorative vertical text — hidden from screen readers -->
+    <div class="save-the-date-text" aria-hidden="true">
+      <span class="std-word std-save">SAVE</span>
+      <span class="std-the">the</span>
+      <span class="std-word std-date">DATE</span>
+    </div>
+
+    <!-- Accessible heading for screen readers -->
+    <h1 class="sr-only">Save the Date for Dante and Anjali's wedding</h1>
+
+    <!-- Wedding details — bottom right -->
+    <div class="details">
+      <p class="details-names">Dante &amp; Anjali</p>
+      <p class="details-date">February 27, 2027</p>
+      <p class="details-venue">Sparrow Valley Retreat</p>
+      <p class="details-location">Aptos, California</p>
+    </div>
+  </main>
+</body>
+</html>

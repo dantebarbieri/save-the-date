@@ -1,0 +1,210 @@
+/* ============================================================
+   Save the Date — Dante & Anjali
+   ============================================================ */
+
+:root {
+  --color-text: #f5f0e8;
+  --color-text-detail: #e8e0d0;
+
+  --font-display: 'Cormorant Garamond', 'Garamond', 'Georgia', serif;
+  --font-script: 'Great Vibes', cursive;
+  --font-body: 'Libre Baskerville', 'Georgia', serif;
+
+  --save-date-size: clamp(4rem, min(13vh, 18vw), 10rem);
+  --the-size: clamp(1.8rem, min(4.5vh, 6vw), 4rem);
+  --details-size: clamp(0.7rem, 1.6vw, 1rem);
+}
+
+/* --- Reset --- */
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  background-color: var(--color-text);
+}
+
+html, body {
+  height: 100%;
+  overflow: hidden;
+}
+
+/* --- Background Image --- */
+
+.bg-picture {
+  position: fixed;
+  inset: 16px;
+  z-index: -1;
+  display: block;
+}
+
+.bg-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+}
+
+/* --- Content Layout --- */
+
+.content {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+}
+
+/* Gradient scrim for text readability */
+.content::before {
+  content: '';
+  position: absolute;
+  inset: 16px;
+  background:
+    linear-gradient(to right, rgba(0, 0, 0, 0.45) 0%, rgba(0, 0, 0, 0.15) 30%, transparent 50%),
+    linear-gradient(to top, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.15) 25%, transparent 45%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* --- SAVE the DATE vertical text --- */
+
+.save-the-date-text {
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  left: clamp(1.5rem, 4vw, 4rem);
+  transform: rotate(-90deg) translateX(-50%);
+  transform-origin: 0 0;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  white-space: nowrap;
+}
+
+.std-word {
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: var(--save-date-size);
+  color: var(--color-text);
+  text-shadow:
+    0 0 8px rgba(0, 0, 0, 0.6),
+    0 0 25px rgba(0, 0, 0, 0.3);
+}
+
+.std-the {
+  font-family: var(--font-script);
+  font-size: var(--the-size);
+  color: var(--color-text);
+  text-shadow:
+    0 0 8px rgba(0, 0, 0, 0.5),
+    0 0 20px rgba(0, 0, 0, 0.3);
+}
+
+/* --- Wedding Details --- */
+
+.details {
+  position: relative;
+  z-index: 1;
+  align-self: flex-end;
+  margin-left: auto;
+  padding: clamp(1.5rem, 4vw, 3rem);
+  text-align: right;
+  max-width: 50%;
+}
+
+.details p {
+  font-family: var(--font-body);
+  font-size: var(--details-size);
+  color: var(--color-text-detail);
+  line-height: 1.9;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  text-shadow:
+    0 0 6px rgba(0, 0, 0, 0.8),
+    0 1px 3px rgba(0, 0, 0, 0.9);
+}
+
+.details-names {
+  font-size: calc(var(--details-size) * 1.2);
+  margin-bottom: 0.2em;
+}
+
+/* --- Accessibility --- */
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ============================================================
+   Responsive
+   ============================================================ */
+
+/* Tablet / narrow screens — switch to vertical image */
+@media (max-width: 768px) {
+  .bg-img {
+    object-position: center 35%;
+  }
+
+  .save-the-date-text {
+    left: clamp(1rem, 3vw, 2rem);
+  }
+
+  .details {
+    max-width: 70%;
+  }
+}
+
+/* Small phones */
+@media (max-width: 480px) {
+  :root {
+    --save-date-size: clamp(2.5rem, min(7vh, 12vw), 4.5rem);
+    --the-size: clamp(1.2rem, min(3vh, 4vw), 2rem);
+    --details-size: clamp(0.6rem, 2.8vw, 0.85rem);
+  }
+
+  .details {
+    max-width: 85%;
+    padding: 1.25rem;
+  }
+}
+
+/* Landscape phones — very short viewport */
+@media (max-height: 500px) and (orientation: landscape) {
+  :root {
+    --save-date-size: clamp(2rem, 8vh, 4rem);
+    --the-size: clamp(1rem, 4vh, 2rem);
+  }
+
+  .details {
+    padding: 1rem;
+  }
+}
+
+/* Ultra-wide monitors */
+@media (min-width: 2000px) {
+  :root {
+    --save-date-size: 10rem;
+    --details-size: 1rem;
+  }
+
+  .content {
+    max-width: 2200px;
+    margin: 0 auto;
+  }
+}

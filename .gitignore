@@ -1,0 +1,6 @@
+.DS_Store
+*.orig
+.originals/
+background-wide.jpg
+background-vertical.jpg
+inspo.png
