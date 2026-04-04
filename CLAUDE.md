@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-A static "Save the Date" wedding website. No build tools — plain HTML/CSS/JS served via GitHub Pages under a custom domain.
+A static "Save the Date" wedding website for Dante & Anjali. No build tools — plain HTML/CSS served via GitHub Pages under a custom domain. No JavaScript.
 
 ## Development
 
@@ -16,38 +16,70 @@ python3 -m http.server 8000
 
 No build step, no dependencies, no tests. Deployment is automatic via GitHub Pages on push to main.
 
-## Design Intent
+## File Structure
 
-The design is inspired by a Save the Date card from The Knot (screenshot was in `inspo.png`, may be deleted). Key layout from the inspiration:
+```
+index.html            — page markup and responsive <picture> elements
+styles.css            — all styling (layout, typography, responsive breakpoints)
+CNAME                 — custom domain (savethedate.danteandanjali.com)
+assets/img/           — optimized images in AVIF, WebP, and JPG at multiple resolutions
+  wide-{640..3840}.*  — landscape crop for wide viewports
+  vertical-{640..1920}.* — portrait crop for narrow/mobile viewports
+.originals/           — unoptimized source images (not deployed)
+background-wide.jpg   — original wide photo (source for optimized assets)
+background-vertical.jpg — original vertical photo (AI-extended portrait crop)
+```
 
-- **Full-bleed background photo** — the image fills the entire viewport (no centered card on a gray background; avoid empty space around the photo)
-- **"SAVE" and "DATE"** in large vertical serif lettering, positioned on the left side of the viewport
-- **"the"** in a cursive/script font, placed between "SAVE" and "DATE"
+## Design
+
+### Layout
+
+- **Full-bleed background photo** fills the entire viewport (`object-fit: cover`)
+- **"SAVE the DATE"** in large vertical text, rotated −90° on the left side of the viewport
 - **Wedding details** (names, date, venue, city) in smaller serif text, positioned bottom-right
+- Gradient scrim overlays (horizontal from left, vertical from bottom) ensure text readability over the photo
 
-### Fonts
+### Fonts (Google Fonts)
 
-The Knot original uses "The Seasons" (for SAVE/DATE) and "Mrs Eaves" (for wedding details). Both are paid/licensed fonts. Use similar free alternatives:
+- **Cormorant Garamond 300** — SAVE / DATE display text (elegant thin serif)
+- **Great Vibes** — "the" script accent between SAVE and DATE
+- **Libre Baskerville** — wedding details (readable serif)
 
-- **SAVE / DATE text**: Use a elegant thin serif like Cormorant Garamond, Playfair Display, or similar Google Font that evokes "The Seasons"
-- **"the" script**: Use a cursive Google Font (e.g., Great Vibes, Tangerine, or similar)
-- **Wedding info**: Use a readable serif like EB Garamond or Libre Baskerville to evoke "Mrs Eaves" — ensure sufficient contrast and legibility (the original was hard to read)
+### Colors
 
-### Responsive Background Images
+- Text: `#f5f0e8` (cream) with `#e8e0d0` for detail text
+- Theme color: `#3d3529`
 
-Two versions of the same photo exist:
+### Responsive Images
 
-- `background-wide.jpg` — landscape crop for wide screens
-- `background-vertical.jpg` — portrait crop (AI-extended) for narrow/mobile screens
+Two art-directed crops of the same photo:
 
-Behavior: On wide displays, use `background-wide.jpg` and crop it (via `background-size: cover` or similar) to fit the viewport. As the viewport narrows and the wide image would be too aggressively cropped, switch to `background-vertical.jpg`. The switch should happen at a natural breakpoint where the vertical image looks better than an over-cropped wide image (experiment around 768px or wherever the aspect ratio transition feels right).
+- `wide-*` — landscape crop for viewports >768px
+- `vertical-*` — portrait crop for viewports ≤768px
 
-### Accessibility
+Served via `<picture>` with `<source>` elements providing AVIF → WebP → JPG fallback at resolutions from 640px to 3840px. Font sizes use `clamp()` for fluid scaling across breakpoints.
 
-- Text overlaid on the photo must have sufficient visual contrast (use text-shadow, a semi-transparent overlay, or gradient scrim behind text)
-- Use semantic HTML and appropriate ARIA attributes
-- Ensure the page is usable with screen readers (meaningful heading structure, alt text considerations for decorative background)
+### Responsive Breakpoints
+
+- **≤768px**: switches to vertical image, adjusts text positioning
+- **≤480px**: tighter padding and constrained font sizes
+- **≤500px height (landscape)**: minimal font sizes for short viewports
+- **≥2000px**: caps font sizes and centers content (max-width 2200px)
+
+## Metadata
+
+- Open Graph and Twitter Card tags for rich link previews
+- Canonical URL: `https://savethedate.danteandanjali.com/`
+- OG image points to `background-wide.jpg`
+
+## Accessibility
+
+- Screen-reader-only `<h1>` via `.sr-only` class
+- `aria-hidden="true"` on decorative visual text
+- `aria-label` on main content landmark
+- `role="presentation"` on background image
+- Text contrast ensured via text-shadow and gradient scrim overlays
 
 ## Hosting
 
-GitHub Pages with a custom domain. Requires a `CNAME` file in the repo root with the domain name.
+GitHub Pages with a custom domain. The `CNAME` file in the repo root contains `savethedate.danteandanjali.com`.
