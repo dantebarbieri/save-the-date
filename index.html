@@ -10,9 +10,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-  <!-- LCP image preload hints -->
-  <link rel="preload" as="image" type="image/avif" href="assets/img/wide-1920.avif" media="(min-width: 769px)">
-  <link rel="preload" as="image" type="image/avif" href="assets/img/vertical-1024.avif" media="(max-width: 768px)">
+  <!-- Preload the fast-load image for instant display -->
+  <link rel="preload" as="image" type="image/webp" href="assets/img/wide-1024.webp" media="(min-width: 769px)">
+  <link rel="preload" as="image" type="image/webp" href="assets/img/vertical-1024.webp" media="(max-width: 768px)">
 
   <!-- Google Fonts: single combined request -->
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300&family=Great+Vibes&family=Libre+Baskerville&display=swap" rel="stylesheet">
@@ -20,7 +20,15 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <!-- Background image with art direction + resolution switching -->
+  <!-- Fast-load medium-res (loads quickly, replaced by full-res) -->
+  <img
+    src="assets/img/wide-1024.webp"
+    alt=""
+    role="presentation"
+    class="bg-placeholder"
+    id="bg-placeholder">
+
+  <!-- Full-res background image with art direction + resolution switching -->
   <picture class="bg-picture">
     <!-- Vertical (portrait) sources for narrow viewports -->
     <source
@@ -53,7 +61,8 @@
         assets/img/wide-1024.avif 1024w,
         assets/img/wide-1440.avif 1440w,
         assets/img/wide-1920.avif 1920w,
-        assets/img/wide-2560.avif 2560w"
+        assets/img/wide-2560.avif 2560w,
+        assets/img/wide-3840.avif 3840w"
       sizes="100vw">
     <source
       type="image/webp"
@@ -61,7 +70,8 @@
         assets/img/wide-1024.webp 1024w,
         assets/img/wide-1440.webp 1440w,
         assets/img/wide-1920.webp 1920w,
-        assets/img/wide-2560.webp 2560w"
+        assets/img/wide-2560.webp 2560w,
+        assets/img/wide-3840.webp 3840w"
       sizes="100vw">
 
     <!-- Ultimate JPG fallback -->
@@ -69,7 +79,8 @@
       src="assets/img/wide-1920.jpg"
       alt=""
       role="presentation"
-      class="bg-img"
+      class="bg-img bg-img--loading"
+      id="bg-full"
       fetchpriority="high"
       decoding="async">
   </picture>
@@ -93,5 +104,23 @@
       <p class="details-location">Aptos, California</p>
     </div>
   </main>
+  <script>
+    // Swap placeholder for vertical on narrow screens
+    var ph = document.getElementById('bg-placeholder');
+    if (window.innerWidth <= 768) {
+      ph.src = 'assets/img/vertical-1024.webp';
+    }
+    // Fade in full-res image when loaded
+    var full = document.getElementById('bg-full');
+    function onFullLoad() {
+      full.classList.remove('bg-img--loading');
+      ph.style.display = 'none';
+    }
+    if (full.complete) {
+      onFullLoad();
+    } else {
+      full.addEventListener('load', onFullLoad);
+    }
+  </script>
 </body>
 </html>
